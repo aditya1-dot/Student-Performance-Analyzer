@@ -18,7 +18,7 @@ An interactive Streamlit dashboard for visualizing and analyzing quiz performanc
 
 ## Installation
 ```bash
-pip install streamlit plotly google-generativeai requests numpy
+pip install -r requirements.txt
 ```
 
 ## Setup

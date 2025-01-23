@@ -54,7 +54,63 @@ class QuizPerformanceVisualizer:
             labels={'x':'Topics', 'y':'Average Score'}
         )
         fig.write_html('topic_performance_interactive.html')
+    def plot_difficulty_performance(self):
+        """
+        Visualize performance across different difficulty levels
+        """
+        # Extract difficulty levels and corresponding performance metrics
+        difficulty_levels = []
+        avg_scores = []
+        avg_accuracies = []
         
+        for quiz in self.data.get('historical_data', []):
+            difficulty = quiz.get('difficulty', 'Unknown')
+            score = quiz.get('score', 0)
+            accuracy = float(quiz.get('accuracy', '0%').rstrip('%'))
+            
+            if difficulty not in difficulty_levels:
+                difficulty_levels.append(difficulty)
+                avg_scores.append([score])
+                avg_accuracies.append([accuracy])
+            else:
+                idx = difficulty_levels.index(difficulty)
+                avg_scores[idx].append(score)
+                avg_accuracies[idx].append(accuracy)
+        
+        # Calculate mean scores and accuracies
+        mean_scores = [np.mean(scores) for scores in avg_scores]
+        mean_accuracies = [np.mean(accuracies) for accuracies in avg_accuracies]
+        
+        # Matplotlib visualization for scores
+        plt.figure(figsize=(10, 5))
+        plt.subplot(1, 2, 1)
+        plt.bar(difficulty_levels, mean_scores)
+        plt.title('Average Scores by Difficulty')
+        plt.xlabel('Difficulty Level')
+        plt.ylabel('Average Score')
+        
+        # Matplotlib visualization for accuracies
+        plt.subplot(1, 2, 2)
+        plt.bar(difficulty_levels, mean_accuracies)
+        plt.title('Average Accuracies by Difficulty')
+        plt.xlabel('Difficulty Level')
+        plt.ylabel('Average Accuracy (%)')
+        
+        plt.tight_layout()
+        plt.savefig('difficulty_performance.png')
+        plt.close()
+        
+        # Interactive Plotly visualization
+        fig = go.Figure(data=[
+            go.Bar(name='Average Score', x=difficulty_levels, y=mean_scores),
+            go.Bar(name='Average Accuracy', x=difficulty_levels, y=mean_accuracies)
+        ])
+        fig.update_layout(
+            title='Performance by Difficulty Level',
+            xaxis_title='Difficulty Level',
+            yaxis_title='Performance'
+        )
+        fig.write_html('difficulty_performance_interactive.html')    
     def plot_accuracy_trend(self):
         """
         Visualize accuracy trend over time
@@ -195,7 +251,7 @@ def main():
         visualizer.plot_topic_performance()
         visualizer.plot_accuracy_trend()
         visualizer.generate_performance_summary()
-        
+        visualizer.plot_difficulty_performance()
         # Generate AI Insights (optional, requires Gemini API key)
         ai_insights = visualizer.generate_ai_insights()
         if ai_insights:

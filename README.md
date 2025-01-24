@@ -31,7 +31,8 @@ pip install -r requirements.txt
 ```bash
 streamlit run dashboard.py
 ```
-
+##Video
+![Video Explaining approach and solution](https://drive.google.com/file/d/1c1dipmc_j9R0ImoAUwMVD99wpNVlZXJz/view?usp=sharing)
 ## Screenshots
 ![Topic Performance](images/img1.png)
 ![Accuracy Trend](images/img2.png)

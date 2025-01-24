@@ -35,9 +35,11 @@ streamlit run dashboard.py
 ## Screenshots
 ![Topic Performance](images/img1.png)
 ![Accuracy Trend](images/img2.png)
-![Radar Chart](images/img3.png)
-![AI Insights 1](images/img4.png)
-![AI Insights 2](images/img5.png)
+![Historical Performance by Difficulty](images/img3.png)
+![Latest Quiz Submission Performance](images/img4.png)
+![Topic Performance Radar Chart](images/img5.png)
+![Ai insights](images/img6.png)
+![Ai insights2](images/img7.png)
 
 ## Key Technologies
 - Streamlit
